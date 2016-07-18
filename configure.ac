@@ -7,11 +7,10 @@ AC_CONFIG_AUX_DIR([build-aux/autoconf])
 AC_CONFIG_MACRO_DIR([build-aux/m4])
 AM_CONFIG_HEADER(config.h)
 
-# AC_CONFIG_FILES([Makefile src/Makefile po/Makefile.in])
-AC_CONFIG_FILES([Makefile src/Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile po/Makefile.in])
 
-#AM_GNU_GETTEXT_VERSION([0.19.4])
-#AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([0.19.8])
+AM_GNU_GETTEXT([external])
 
 AC_PROG_CC
 
