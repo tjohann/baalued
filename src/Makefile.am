@@ -8,10 +8,12 @@ baalued_SOURCES =             	\
 
 
 baalued_CFLAGS =             	\
+	$(LIBCONFIG_CFLAGS)     \
 	$(LIBBAALUE_CFLAGS)     \
-	-DLOCALEDIR=\"$(localedir)\" -I$(srcdir)/../../lib
+	-DLOCALEDIR=\"$(localedir)\" -I$(srcdir)/../lib
 
 
 baalued_LDADD =    	        \
 	$(LIBCONFIG_LIBS)   	\
-	$(LIBINTL)
+	$(LIBBAALUE_LIBS)      	\
+	$(LIBINTL) ../lib/libservice.a
