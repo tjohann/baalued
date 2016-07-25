@@ -20,9 +20,10 @@
 
 #include "libservice.h"
 
-
 static char *program_name;
 static int running_mode = RUN_AS_APPLICATION;
+
+static sigset_t mask;
 
 static void
 __attribute__((noreturn)) usage(int status)
@@ -48,10 +49,44 @@ cleanup(void)
 	fprintf(stdout, _("Finalize cleanup -> cheers %s\n"), getenv("USER"));
 }
 
+static void *
+sig_handler(void *args)
+{
+	(void) args;
+
+	int sig = EINVAL;
+	int err = -1;
+	for (;;) {
+		err = sigwait(&mask, &sig);
+		if (err != 0)
+			baa_error_exit(_("sigwait() != 0 in %s"), __FUNCTION__);
+#ifdef __DEBUG__
+		baa_info_msg(_("Catched signal \"%s\" (%d)"),
+			     strsignal(sig), sig);
+#endif
+		switch(sig) {
+		case SIGTERM:
+			baa_info_msg(_("Goodbye crude world "));
+			exit(EXIT_SUCCESS);
+			break;
+		case SIGHUP:
+			baa_info_msg(_("Signal \"%s\" (%d) -> what should i do?"),
+				     strsignal(sig), sig);
+			break;
+		default:
+			baa_error_msg(_("Unhandled signal \"%s\" (%d)"),
+				      strsignal(sig), sig);
+		}
+	}
+
+	return NULL;
+}
 
 int
 main(int argc, char *argv[])
 {
+	pthread_t tid_sig_handler;
+
 	setlocale(LC_ALL, "");
 	bindtextdomain(PACKAGE, LOCALEDIR);
 	textdomain(PACKAGE);
@@ -89,6 +124,16 @@ main(int argc, char *argv[])
 		baa_info_msg(_("run in foreground as application"));
 	}
 
+	sigfillset(&mask);
+	int err = pthread_sigmask(SIG_BLOCK, &mask, NULL);
+	if (err != 0)
+		baa_th_error_exit(err, _("Could not set sigmask in %s"),
+				  __FUNCTION__);
+
+	err = pthread_create(&tid_sig_handler, NULL, sig_handler, 0);
+	if (err != 0)
+		baa_th_error_exit(err, _("Could not create pthread in %s"),
+				  __FUNCTION__);
 
 
 

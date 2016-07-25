@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: baalued trunk\n"
 "Report-Msgid-Bugs-To: thorsten.johannvorderbrueggen@t-online.de\n"
-"POT-Creation-Date: 2016-07-19 07:02+0200\n"
+"POT-Creation-Date: 2016-07-25 20:53+0200\n"
 "PO-Revision-Date: 2016-07-18 21:47+0200\n"
 "Last-Translator: tjohann <thorsten.johannvorderbrueggen@t-online.de>\n"
 "Language-Team: German\n"
@@ -17,9 +17,89 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/main.c:30
+#: src/main.c:32
+#, c-format
+msgid "Usage: %s [options]              \n"
+msgstr ""
+
+#: src/main.c:33
+#, c-format
+msgid "Options:                                       \n"
+msgstr ""
+
+#: src/main.c:35
 #, c-format
 msgid ""
-"\n"
-"autotool-demo says hello\n"
+"        -h                 show "
+"help                                             \n"
+msgstr ""
+
+#: src/main.c:37
+#, c-format
+msgid ""
+"        -a                 run as application in "
+"foreground                      \n"
+msgstr ""
+
+#: src/main.c:39
+#, c-format
+msgid ""
+"        -s                 run as service/daemon in background (syslog "
+"enabled)  \n"
+msgstr ""
+
+#: src/main.c:49
+#, c-format
+msgid "Finalize cleanup -> cheers %s\n"
+msgstr ""
+
+#: src/main.c:62
+#, c-format
+msgid "sigwait() != 0 in %s"
+msgstr ""
+
+#: src/main.c:64
+#, c-format
+msgid "Catched signal \"%s\" (%d)"
+msgstr ""
+
+#: src/main.c:69
+msgid "Goodbye crude world "
+msgstr ""
+
+#: src/main.c:73
+#, c-format
+msgid "Signal \"%s\" (%d) -> what should i do?"
+msgstr ""
+
+#: src/main.c:77
+#, c-format
+msgid "Unhandled signal \"%s\" (%d)"
+msgstr ""
+
+#: src/main.c:109
+#, c-format
+msgid "ERROR: no valid argument\n"
+msgstr ""
+
+#: src/main.c:119
+msgid "become_daemon() != 0"
+msgstr ""
+
+#: src/main.c:121
+msgid "now i'm a daemon"
+msgstr ""
+
+#: src/main.c:124
+msgid "run in foreground as application"
+msgstr ""
+
+#: src/main.c:130
+#, c-format
+msgid "Could not set sigmask in %s"
+msgstr ""
+
+#: src/main.c:135
+#, c-format
+msgid "Could not create pthread in %s"
 msgstr ""
