@@ -4,7 +4,7 @@ make uninstall
 make distclean
 
 autoreconf --install || exit 1
-./configure --prefix=$HOME
+./configure --prefix=$HOME --enable-debug
 
 cd po
 make update-po
