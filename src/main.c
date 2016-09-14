@@ -29,15 +29,12 @@ static void
 __attribute__((noreturn)) usage(int status)
 {
 	putchar('\n');
-	fprintf(stdout, _("Usage: %s [options]              \n"), program_name);
-	fprintf(stdout, _("Options:                                       \n"));
-
-	fprintf(stdout, _("        -h                 \
-show help                                             \n"));
-	fprintf(stdout, _("        -a                 \
-run as application in foreground                      \n"));
-	fprintf(stdout, _("        -s                 \
-run as service/daemon in background (syslog enabled)  \n"));
+	baa_info_msg(_("Usage: %s [options]                             "),
+		     program_name);
+	baa_info_msg(_("Options:                                        "));
+	baa_info_msg(_("        -h   show help                          "));
+	baa_info_msg(_("        -a   run as application in foreground   "));
+	baa_info_msg(_("        -s   run as service/daemon in background"));
 	putchar('\n');
 
 	exit(status);
@@ -46,7 +43,7 @@ run as service/daemon in background (syslog enabled)  \n"));
 static void
 cleanup(void)
 {
-	fprintf(stdout, _("Finalize cleanup -> cheers %s\n"), getenv("USER"));
+	baa_info_msg(_("Finalize cleanup -> cheers %s\n"), getenv("USER"));
 }
 
 static void *
@@ -106,7 +103,7 @@ main(int argc, char *argv[])
 			usage(EXIT_SUCCESS);
 			break;
 		default:
-			fprintf(stderr, _("ERROR: no valid argument\n"));
+			baa_error_msg(_("ERROR: no valid argument\n"));
 			usage(EXIT_FAILURE);
 		}
 	}

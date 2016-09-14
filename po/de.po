@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: baalued trunk\n"
 "Report-Msgid-Bugs-To: thorsten.johannvorderbrueggen@t-online.de\n"
-"POT-Creation-Date: 2016-07-26 07:01+0200\n"
+"POT-Creation-Date: 2016-09-14 12:07+0200\n"
 "PO-Revision-Date: 2016-07-18 21:47+0200\n"
 "Last-Translator: tjohann <thorsten.johannvorderbrueggen@t-online.de>\n"
 "Language-Team: German\n"
@@ -19,87 +19,81 @@ msgstr ""
 
 #: src/main.c:32
 #, c-format
-msgid "Usage: %s [options]              \n"
+msgid "Usage: %s [options]                             "
 msgstr ""
 
-#: src/main.c:33
-#, c-format
-msgid "Options:                                       \n"
+#: src/main.c:34
+msgid "Options:                                        "
 msgstr ""
 
 #: src/main.c:35
-#, c-format
-msgid ""
-"        -h                 show "
-"help                                             \n"
+msgid "        -h   show help                          "
+msgstr ""
+
+#: src/main.c:36
+msgid "        -a   run as application in foreground   "
 msgstr ""
 
 #: src/main.c:37
-#, c-format
-msgid ""
-"        -a                 run as application in "
-"foreground                      \n"
+msgid "        -s   run as service/daemon in background"
 msgstr ""
 
-#: src/main.c:39
-#, c-format
-msgid ""
-"        -s                 run as service/daemon in background (syslog "
-"enabled)  \n"
-msgstr ""
-
-#: src/main.c:49
+#: src/main.c:46
 #, c-format
 msgid "Finalize cleanup -> cheers %s\n"
 msgstr ""
 
-#: src/main.c:62
+#: src/main.c:59
 #, c-format
 msgid "sigwait() != 0 in %s"
 msgstr ""
 
-#: src/main.c:64
+#: src/main.c:61
 #, c-format
 msgid "Catched signal \"%s\" (%d)"
 msgstr ""
 
-#: src/main.c:69
+#: src/main.c:66
 msgid "Goodbye crude world "
 msgstr ""
 
-#: src/main.c:73
+#: src/main.c:70
 #, c-format
 msgid "Signal \"%s\" (%d) -> what should i do?"
 msgstr ""
 
-#: src/main.c:77
+#: src/main.c:74
 #, c-format
 msgid "Unhandled signal \"%s\" (%d)"
 msgstr ""
 
-#: src/main.c:109
-#, c-format
+#: src/main.c:106
 msgid "ERROR: no valid argument\n"
 msgstr ""
 
-#: src/main.c:119
+#: src/main.c:116
 msgid "become_daemon() != 0"
 msgstr ""
 
-#: src/main.c:121
+#: src/main.c:118
 msgid "now i'm a daemon"
 msgstr ""
 
-#: src/main.c:124
+#: src/main.c:121
 msgid "run in foreground as application"
 msgstr ""
 
-#: src/main.c:130
+#: src/main.c:127
 #, c-format
 msgid "Could not set sigmask in %s"
 msgstr ""
 
-#: src/main.c:135
+#: src/main.c:132
 #, c-format
 msgid "Could not create pthread in %s"
+msgstr ""
+
+#: lib/libservice.h:124
+#, c-format
+msgid "Your're in %s of %s"
 msgstr ""
