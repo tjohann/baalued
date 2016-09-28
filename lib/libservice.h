@@ -57,6 +57,7 @@
 #include <sys/sysinfo.h>
 #include <semaphore.h>
 #include <sys/syscall.h>
+#include <grp.h>
 
 /* inotify inc */
 #include <sys/inotify.h>
@@ -88,56 +89,15 @@
 /* https://github.com/tjohann/libbaalue.git */
 #include <libbaalue.h>
 
-/*
- * common defines
- * -------------
- */
+#define MAX_LEN_MSG 100
 
-#ifndef __DEBUG__
-#define VAR_RUN_DIR "/var/run"
-#else
-#define VAR_RUN_DIR "/tmp"
-#endif
+void
+show_some_infos(void);
 
-/*
- * running modes -> normale application in foreground or as daemon in
- * background
- */
-#define RUN_AS_APPLICATION 0
-#define RUN_AS_DAEMON      1
+void *
+signal_handler(void *args);
 
-
-/*
- * common types
- * -------------
- */
-
-
-
-/*
- * common macros
- * -------------
- */
-#define _(string) gettext(string)
-
-#define PRINT_LOCATION() do {			      \
-		baa_info_msg(_("Your're in %s of %s"),    \
-			 __FUNCTION__, __FILE__);     \
-	} while (0)
-
-
-/*
- * helper.c
- * ========
- */
-
-
-/*
- * config.c
- * ========
- */
-
-
-
+void *
+baalue_server_th(void *args);
 
 #endif
