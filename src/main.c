@@ -161,7 +161,7 @@ main(int argc, char *argv[])
 	/*
 	 * setup inet udp server
 	 */
-	kdo_socket_inet = baa_inet_dgram_server(NULL, baalued_port);
+	kdo_socket_inet = baa_inet_dgram_server(baalued_port);
 	if (kdo_socket_inet == -1)
 		baa_error_exit("could not create inet kdo socket");
 
