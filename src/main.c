@@ -29,6 +29,7 @@ static int kdo_socket_inet = -1;
 
 extern sigset_t mask;
 
+/* 8101-8114   Unassigned */
 const char baalued_port[] = "8111";
 
 static void
@@ -167,10 +168,8 @@ main(int argc, char *argv[])
 
 	err = pthread_create(&tid_inet_server, NULL,
 			     baa_device_mgmt_th, (void *) &kdo_socket_inet);
-	if (err != 0) {
+	if (err != 0)
 		baa_th_error_exit(err, "could not create pthread");
-		exit(EXIT_FAILURE);
-	}
 
 	(void) pthread_join(tid_uds_server, NULL);
 	(void) pthread_join(tid_inet_server, NULL);
