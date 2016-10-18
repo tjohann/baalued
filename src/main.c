@@ -134,7 +134,7 @@ main(int argc, char *argv[])
 		baa_th_error_exit(err, "could not create pthread");
 
 	/*
-	 * setup unix domain server
+	 * setup unix domain server device managment thread
 	 */
 	kdo_socket_uds = baa_uds_dgram_server(program_name, tmp_dir, &kdo_file);
 	if (kdo_socket_uds == -1)
@@ -160,7 +160,7 @@ main(int argc, char *argv[])
 	}
 
 	/*
-	 * setup inet udp server
+	 * setup inet udp server device managment thread
 	 */
 	kdo_socket_inet = baa_inet_dgram_server(baalued_port);
 	if (kdo_socket_inet == -1)
@@ -170,6 +170,16 @@ main(int argc, char *argv[])
 			     baa_device_mgmt_th, (void *) &kdo_socket_inet);
 	if (err != 0)
 		baa_th_error_exit(err, "could not create pthread");
+
+	/*
+	 * the other threads/tasks:
+	 *
+	 * - time-triggert stuff
+	 * - can stuff
+	 * - a20_sdk stuff (clone/pull /opt/a20_sdk/external/...)
+	 * - hypervisor control stuff
+	 * - libxbps stuff (update void-linux)
+	 */
 
 	(void) pthread_join(tid_uds_server, NULL);
 	(void) pthread_join(tid_inet_server, NULL);

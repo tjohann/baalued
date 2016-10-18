@@ -3,4 +3,5 @@
 src/main.c
 lib/helper.c
 lib/config.c
+lib/server.c
 lib/libservice.h

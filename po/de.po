@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: baalued trunk\n"
 "Report-Msgid-Bugs-To: thorsten.johannvorderbrueggen@t-online.de\n"
-"POT-Creation-Date: 2016-09-28 14:07+0200\n"
+"POT-Creation-Date: 2016-10-18 10:54+0200\n"
 "PO-Revision-Date: 2016-07-18 21:47+0200\n"
 "Last-Translator: tjohann <thorsten.johannvorderbrueggen@t-online.de>\n"
 "Language-Team: German\n"
@@ -17,33 +17,33 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/main.c:38
+#: src/main.c:39
 msgid "finalize cleanup"
 msgstr ""
 
-#: src/main.c:47 src/main.c:50
+#: src/main.c:48 src/main.c:51
 #, c-format
 msgid "could not remove %s"
 msgstr ""
 
-#: src/main.c:52
+#: src/main.c:53
 #, c-format
 msgid "cheers %s"
 msgstr ""
 
-#: src/main.c:59
+#: src/main.c:60
 #, c-format
 msgid "Usage: %s [options]                             "
 msgstr ""
 
-#: src/main.c:61
+#: src/main.c:62
 msgid "Options:                                        "
 msgstr ""
 
-#: src/main.c:62
+#: src/main.c:63
 msgid "        -h   show help                          "
 msgstr ""
 
-#: src/main.c:88
+#: src/main.c:89
 msgid "ERROR: no valid argument\n"
 msgstr ""
