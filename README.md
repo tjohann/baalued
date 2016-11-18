@@ -1,35 +1,61 @@
 baalued - bananapi cluster node controller
 ==========================================
 
-The baalue daemon provide an TCP/UDP interface to a bananapi cluster node. With that interface you can control and trigger standard task on such cluster node. Although its named bananapi cluster node daemon you can use it on any other target devices too.
+The baalue daemon provide a socket based interface to a cluster node. With that interface you can control and trigger standard task like halt (via inet datagram socket) or set scheduling propertys of a process and its time-triggert threads (via unix domain socket). The daemon has different threads which handles the requests and depending on the configured the thread/service will be started or not.
 
-Baalued is part of my sdk's like https://github.com/tjohann/a20_sdk.git and the related sdk tool (https://github.com/tjohann/sdk_builder.git). It runs on a embedded device like Bananapi-M1. To interact/control the daemon you can use my XFCE-toolbar (tbd.) tool, my sdk_builder or baalue (https://github.com/tjohann/baalue.git).
+Actually three different services, which are described below, are supported:
 
+	1). set scheduling propertys
+	2). device managment
+	3). ping/alive info (via device managment)
+	4). display control
+
+
+Baalued is part of my sdk's like https://github.com/tjohann/a20_sdk.git . It runs on a embedded device like Bananapi-M1. To interact/control the daemon you can use baalue (https://github.com/tjohann/baalue.git).
+
+Note: Although its named bananapi cluster node daemon you can use it on any other target devices too.
 
 Requirements
 ------------
 
-To build and run baalued you need libbaalue (https://github.com/tjohann/libbaalue.git), no other libs/tools needed.
-
-
-Functions
----------
-
-Baalued provides some basic functionallities like
-
-	1). shutdown the device
-	2). check for config updates (sdk_builder.git and a20_sdk.git)
-	3). ...
+To build and run baalued you need libbaalue (https://github.com/tjohann/libbaalue.git). All main dependencys are "handled" there.
 
 
 Configuration/defaults
 ----------------------
 
-	Port TCP/UDP - 20202 (Common control of a target device)
-	Port TCP/UPD - 20203 (Bananapi cluster node specific services)
+	Port UDP - 8111 (device managment -> UDP socket)
+	/var/run/baalued.socket (UDS socket)
 
 
-Shutdown a device
------------------
+Ping/alive info
+---------------
 
-For a safe shutdown you should never direct unplug the (embedded) device from power. So this function provides the a simple access to remotly shutdown your (embedded) device.
+t.b.d.
+
+
+Display control (LCD160x)
+-------------------------
+
+t.b.d.
+
+
+Device managment
+----------------
+
+t.b.d.
+
+
+Set scheduling propertys
+------------------------
+
+t.b.d.
+
+
+Future services
+---------------
+
+	update device via libxbps
+	control jailhouse hypervisor
+	can bus monitoring
+	...

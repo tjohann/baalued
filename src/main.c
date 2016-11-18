@@ -70,7 +70,7 @@ int
 main(int argc, char *argv[])
 {
 	pthread_t tid_signal_handler;
-	pthread_t tid_uds_server;
+	// pthread_t tid_udp_server;
 	pthread_t tid_inet_server;
 
 	setlocale(LC_ALL, "");
@@ -113,6 +113,7 @@ main(int argc, char *argv[])
 
 	baa_enable_syslog(true, program_name);
 
+	// TODO: change to /var/run/...
 	char *tmp_dir = getenv("TMPDIR");
 	if (tmp_dir == NULL)
 		tmp_dir = TMP_DIR;
@@ -134,32 +135,6 @@ main(int argc, char *argv[])
 		baa_th_error_exit(err, "could not create pthread");
 
 	/*
-	 * setup unix domain server device managment thread
-	 */
-	kdo_socket_uds = baa_uds_dgram_server(program_name, tmp_dir, &kdo_file);
-	if (kdo_socket_uds == -1)
-		baa_error_exit("could not create uds kdo socket");
-
-	err = chmod(kdo_file, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP);
-	if (err == -1)
-		baa_error_exit("could not set permissions to %s", kdo_file);
-
-	struct group *grp_users = getgrnam("users");
-	if (grp_users == NULL)
-		baa_error_exit("could not get group struct");
-
-	err = chown(kdo_file, -1, grp_users->gr_gid);
-	if (err == -1)
-		baa_error_exit("could not set group");
-
-	err = pthread_create(&tid_uds_server, NULL,
-			     baa_device_mgmt_th, (void *) &kdo_socket_uds);
-	if (err != 0) {
-		baa_th_error_exit(err, "could not create pthread");
-		exit(EXIT_FAILURE);
-	}
-
-	/*
 	 * setup inet udp server device managment thread
 	 */
 	kdo_socket_inet = baa_inet_dgram_server(baalued_port);
@@ -174,14 +149,14 @@ main(int argc, char *argv[])
 	/*
 	 * the other threads/tasks:
 	 *
-	 * - time-triggert stuff
+	 * - time-triggert stuff (tid_udp_server)
 	 * - can stuff
 	 * - a20_sdk stuff (clone/pull /opt/a20_sdk/external/...)
 	 * - hypervisor control stuff
 	 * - libxbps stuff (update void-linux)
 	 */
 
-	(void) pthread_join(tid_uds_server, NULL);
+	// (void) pthread_join(tid_udp_server, NULL);
 	(void) pthread_join(tid_inet_server, NULL);
 	(void) pthread_join(tid_signal_handler, NULL);
 
