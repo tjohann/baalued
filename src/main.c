@@ -113,12 +113,7 @@ main(int argc, char *argv[])
 
 	baa_enable_syslog(true, program_name);
 
-	// TODO: change to /var/run/...
-	char *tmp_dir = getenv("TMPDIR");
-	if (tmp_dir == NULL)
-		tmp_dir = TMP_DIR;
-
-	pid_file = baa_create_file_with_pid(program_name, tmp_dir);
+	pid_file = baa_create_file_with_pid(program_name, BAA_VAR_RUN_DIR);
 	if (pid_file == NULL)
 		baa_error_exit("could not create %s", pid_file);
 
