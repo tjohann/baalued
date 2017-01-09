@@ -33,7 +33,6 @@ AC_PROG_MKDIR_P
 AM_SILENT_RULES([yes])
 
 # enable debug info
-# enable debug info
 AC_ARG_ENABLE([debug-info],
         AS_HELP_STRING([--enable-debug-info], [enable debug messages @<:@default=disabled@:>@]),
         [], [enable_debug_info=no])
