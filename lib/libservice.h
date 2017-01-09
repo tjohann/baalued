@@ -88,7 +88,14 @@
 /* https://github.com/tjohann/libbaalue.git */
 #include <libbaalue.h>
 
-#define MAX_LEN_MSG 100
+
+struct baalued_config {
+	bool run_as_daemon;
+	bool start_local_server;
+	bool start_inet_server;
+	bool start_can_server;
+	bool start_ttenv_server;
+};
 
 void
 show_some_infos(void);
@@ -96,7 +103,8 @@ show_some_infos(void);
 void *
 signal_handler(void *args);
 
-void *
-baalue_server_th(void *args);
+int
+read_config(char *config_file, struct baalued_config *conf);
+
 
 #endif

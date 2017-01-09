@@ -1,16 +1,16 @@
 #!/bin/bash
 
-export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:${PKG_CONFIG_PATH}
+# export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:${PKG_CONFIG_PATH}
 
-make uninstall
+sudo make uninstall
 make distclean
 
 autoreconf --install || exit 1
-./configure --prefix=$HOME --enable-debug
+./configure --sysconfdir=/etc --prefix=/usr --enable-debug
 
 cd po
 make update-po
 
 cd ..
 make
-make install
+sudo make install

@@ -19,3 +19,16 @@
 */
 
 #include "libservice.h"
+
+int
+read_config(char *config_file, struct baalued_config *c)
+{
+	memset(c, 0, sizeof(struct baalued_config));
+
+	if (config_file == NULL) {
+		baa_error_msg("config file == NULL");
+		return -1;
+	}
+
+	return 0;
+}
