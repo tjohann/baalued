@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: baalued trunk\n"
 "Report-Msgid-Bugs-To: thorsten.johannvorderbrueggen@t-online.de\n"
-"POT-Creation-Date: 2017-01-09 14:29+0100\n"
+"POT-Creation-Date: 2017-01-09 21:34+0100\n"
 "PO-Revision-Date: 2016-07-18 21:47+0200\n"
 "Last-Translator: tjohann <thorsten.johannvorderbrueggen@t-online.de>\n"
 "Language-Team: German\n"
@@ -17,57 +17,61 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/main.c:60
+#: src/main.c:56
 msgid "finalize cleanup"
 msgstr ""
 
-#: src/main.c:69 src/main.c:75 src/main.c:81 src/main.c:84
+#: src/main.c:65 src/main.c:71 src/main.c:77 src/main.c:80
 #, c-format
 msgid "could not remove %s"
 msgstr ""
 
-#: src/main.c:86
+#: src/main.c:82
 #, c-format
 msgid "cheers %s"
 msgstr ""
 
-#: src/main.c:93
+#: src/main.c:89
 #, c-format
 msgid "Usage: %s [options]                             "
 msgstr ""
 
-#: src/main.c:95
+#: src/main.c:91
 msgid "Options:                                        "
 msgstr ""
 
-#: src/main.c:96
+#: src/main.c:92
 msgid "        -d   run as daemon                      "
 msgstr ""
 
-#: src/main.c:97
+#: src/main.c:93
 msgid "        -i   start inet server                  "
 msgstr ""
 
-#: src/main.c:98
-msgid "        -l   start local server                 "
+#: src/main.c:94
+msgid "        -l   start local server (in progress)   "
 msgstr ""
 
-#: src/main.c:99
-msgid "        -c   start can server                   "
+#: src/main.c:95
+msgid "        -c   start can/lin-env server (not yet) "
 msgstr ""
 
-#: src/main.c:100
-msgid "        -t   start tt-env server                "
+#: src/main.c:96
+msgid "        -t   start tt-env server (not yet)      "
 msgstr ""
 
-#: src/main.c:101
+#: src/main.c:97
 msgid "        -f   baalued.conf -> use config file    "
 msgstr ""
 
-#: src/main.c:102
+#: src/main.c:98
+msgid "             (this will override kdo arguments!)"
+msgstr ""
+
+#: src/main.c:99
 msgid "        -h   show help                          "
 msgstr ""
 
-#: src/main.c:189
+#: src/main.c:188
 msgid "ERROR: no valid argument\n"
 msgstr ""

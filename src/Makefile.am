@@ -2,8 +2,13 @@
 # Makefile.am
 #
 
-AM_LDFLAGS = -Wl,--gc-sections -Wl,--as-needed
+if ENABLE_DEBUG_INFO
+AM_CFLAGS = ${my_CFLAGS} \
+	${my_DEBUG_CFLAGS}
+else
 AM_CFLAGS = ${my_CFLAGS}
+endif
+AM_LDFLAGS = -Wl,--gc-sections -Wl,--as-needed
 
 bin_PROGRAMS = baalued
 

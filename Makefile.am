@@ -1,7 +1,7 @@
 # Makefile.am
 
-CLEANFILES = *~ '\#*\#'
-
+CLEANFILES = *~
+# '\#*\#'
 ACLOCAL_AMFLAGS = -I build-aux/m4
 AM_MAKEFLAGS = --no-print-directory
 

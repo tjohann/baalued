@@ -27,15 +27,17 @@ AM_INIT_AUTOMAKE([-Wall -Werror dist-bzip2 silent-rules])
 AC_PROG_CC
 AM_PROG_AR
 AC_PROG_RANLIB
+AC_PROG_MKDIR_P
 
 # ./configure --enable-silent-rules/--disable-silent-rules
 AM_SILENT_RULES([yes])
 
 # enable debug info
-AC_ARG_ENABLE([debug],
-        AS_HELP_STRING([--enable-debug], [enable debug messages @<:@default=disabled@:>@]),
-        [], [enable_debug=no])
-AM_CONDITIONAL([__DEBUG__], [test "$enable_debug" = yes])
+# enable debug info
+AC_ARG_ENABLE([debug-info],
+        AS_HELP_STRING([--enable-debug-info], [enable debug messages @<:@default=disabled@:>@]),
+        [], [enable_debug_info=no])
+AM_CONDITIONAL([ENABLE_DEBUG_INFO], [test "$enable_debug_info" = yes])
 
 # my common CFLAGS
 my_CFLAGS="\
@@ -53,17 +55,23 @@ my_CFLAGS="\
 "
 AC_SUBST([my_CFLAGS])
 
+# my common DEBUG flags
+my_DEBUG_CFLAGS="\
+-D__DEBUG__
+"
+AC_SUBST([my_DEBUG_CFLAGS])
+
 # ------
 
-# checks for programs.
+# checks for programs
 PKG_PROG_PKG_CONFIG
 
-# Checks for libraries.
+# Checks for libraries
 PKG_CHECK_MODULES([LIBBAALUE], [libbaalue])
 PKG_CHECK_MODULES([LIBCONFIG], [libconfig])
 
 AC_CHECK_LIB([pthread], [pthread_create], [], [AC_MSG_ERROR([** Could not find libpthread **])])
-AC_CHECK_LIB([rt], [mq_open], [], [ AC_MSG_ERROR([** Could not find librt **]) ])
+# AC_CHECK_LIB([rt], [mq_open], [], [ AC_MSG_ERROR([** Could not find librt **]) ])
 
 # checks for header files
 AC_HEADER_STDC
@@ -87,7 +95,7 @@ AC_OUTPUT
 # show some basic config info
 AC_MSG_RESULT([
         $PACKAGE $VERSION
-        ========
+        =======================================
 
         prefix:                 ${prefix}
         sysconfdir:             ${sysconfdir}
@@ -97,5 +105,5 @@ AC_MSG_RESULT([
         compiler:               ${CC}
         cflags:                 ${CFLAGS}
 
-	debug:                  ${enable_debug}
+	debug_infos:            ${enable_debug_info}
 ])

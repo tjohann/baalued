@@ -1,15 +1,14 @@
 baalued - bananapi cluster node controller
 ==========================================
 
-The baalue daemon provide a socket based interface to a cluster node. With that interface you can control and trigger standard task like halt (via inet datagram socket) or set scheduling propertys of a process and its time-triggert threads (via unix domain socket). The daemon has different threads which handles the requests and depending on the configured the thread/service will be started or not.
+The baalue daemon provide a socket based interface to a cluster node. With that interface you can control and trigger standard task like halt (via inet datagram socket) or set scheduling propertys of a process and its time-triggert threads. The daemon has different threads which handles the requests (via inet socket) and then connects to the specific daemons (like ttenv-daemon).
 
-Actually three different services, which are described below, are supported:
+Actually four different services, which are described below, are supported:
 
 	1). set scheduling propertys
 	2). device managment
 	3). ping/alive info (via device managment)
 	4). display control
-
 
 Baalued is part of my sdk's like https://github.com/tjohann/a20_sdk.git . It runs on a embedded device like Bananapi-M1. To interact/control the daemon you can use baalue (https://github.com/tjohann/baalue.git).
 
