@@ -14,6 +14,17 @@ Baalued is part of my sdk's like https://github.com/tjohann/a20_sdk.git . It run
 
 Note: Although its named bananapi cluster node daemon you can use it on any other target devices too.
 
+
+Overview
+--------
+
+There're are 3 different way to use this daemon:
+
+1). as the device manager for one baalue cluster node (or similiar device)
+2). as the entry point to initiate device managment tasks for a single baalue cluster node (via xfce panel application)
+3). as a entry node to a baalue cluster via baalue-master node (via xfce panel application)
+
+
 Requirements
 ------------
 
