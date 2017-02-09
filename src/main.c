@@ -21,30 +21,19 @@
 #include "libservice.h"
 
 static char *program_name;
-static bool run_as_daemon = false;
 static char *pid_file;
 
 extern sigset_t mask;
 static pthread_t tid_signal_handler;
 
-/* uds server as entry point for (xfce)-panel applications */
-// static pthread_t tid_uds_server;
-static char *kdo_uds_file;
-static int kdo_socket_uds = -1;
+/* unix domain socket for device managment */
+static pthread_t tid_local_server;
+static char *kdo_local_file;
+static int kdo_socket_local = -1;
 
 /* inet server for device managment */
 static pthread_t tid_inet_server;
 static int kdo_socket_inet = -1;
-
-/* control can/lin environment */
-// static pthread_t tid_can_server;
-static char *kdo_can_file;
-static int kdo_can_uds = -1;
-
-/* control time triggert environment */
-// static pthread_t tid_ttenv_server;
-static char *kdo_ttenv_file;
-static int kdo_ttenv_uds = -1;
 
 /* 8101-8114   Unassigned */
 const char baalued_port[] = "8111";
@@ -58,23 +47,11 @@ cleanup(void)
 	if (kdo_socket_inet != -1)
 		baa_wrap_close(kdo_socket_inet);
 
-	if (kdo_socket_uds != -1)
-		baa_wrap_close(kdo_socket_uds);
+	if (kdo_socket_local != -1)
+		baa_wrap_close(kdo_socket_local);
 
-	if (unlink(kdo_uds_file) != 0)
-		baa_errno_msg(_("could not remove %s"), kdo_uds_file);
-
-	if (kdo_can_uds != -1)
-		baa_wrap_close(kdo_can_uds);
-
-	if (unlink(kdo_can_file) != 0)
-		baa_errno_msg(_("could not remove %s"), kdo_can_file);
-
-	if (kdo_ttenv_uds != -1)
-		baa_wrap_close(kdo_ttenv_uds);
-
-	if (unlink(kdo_ttenv_file) != 0)
-		baa_errno_msg(_("could not remove %s"), kdo_ttenv_file);
+	if (unlink(kdo_local_file) != 0)
+		baa_errno_msg(_("could not remove %s"), kdo_local_file);
 
 	if (unlink(pid_file) != 0)
 		baa_errno_msg(_("could not remove %s"), pid_file);
@@ -91,11 +68,7 @@ __attribute__((noreturn)) usage(int status)
 	baa_info_msg(_("Options:                                        "));
 	baa_info_msg(_("        -d   run as daemon                      "));
 	baa_info_msg(_("        -i   start inet server                  "));
-	baa_info_msg(_("        -l   start local server (in progress)   "));
-	baa_info_msg(_("        -c   start can/lin-env server (not yet) "));
-	baa_info_msg(_("        -t   start tt-env server (not yet)      "));
-	baa_info_msg(_("        -f   baalued.conf -> use config file    "));
-	baa_info_msg(_("             (this will override kdo arguments!)"));
+	baa_info_msg(_("        -l   start local server                 "));
 	baa_info_msg(_("        -h   show help                          "));
 	putchar('\n');
 
@@ -135,18 +108,6 @@ setup_local_server(void)
 	// do something
 }
 
-static void
-setup_can_server(void)
-{
-	// do something
-}
-
-static void
-setup_ttenv_server(void)
-{
-	// do something
-}
-
 int
 main(int argc, char *argv[])
 {
@@ -154,35 +115,26 @@ main(int argc, char *argv[])
 	bindtextdomain(PACKAGE, LOCALEDIR);
 	textdomain(PACKAGE);
 
-	char *config_file = NULL;
-	struct baalued_config conf;
-	memset(&conf, 0, sizeof(conf));
-
 	baa_set_program_name(&program_name, argv[0]);
 
+	bool run_as_daemon = false;
+	bool start_inet_server = false;
+	bool start_local_server = false;
+
 	int c;
-	while ((c = getopt(argc, argv, "hdilcf:")) != -1) {
+	while ((c = getopt(argc, argv, "hdil")) != -1) {
 		switch (c) {
 		case 'h':
 			usage(EXIT_SUCCESS);
 			break;
 		case 'd':
-			conf.run_as_daemon = true;
+			run_as_daemon = true;
 			break;
 		case 'i':
-			conf.start_inet_server = true;
+			start_inet_server = true;
 			break;
 		case 'l':
-			conf.start_local_server = true;
-			break;
-		case 'c':
-			conf.start_can_server = true;
-			break;
-		case 't':
-			conf.start_ttenv_server = true;
-			break;
-		case 'f':
-			config_file = optarg;
+			start_local_server = true;
 			break;
 		default:
 			baa_error_msg(_("ERROR: no valid argument\n"));
@@ -194,29 +146,19 @@ main(int argc, char *argv[])
 	if (err != 0)
 		exit(EXIT_FAILURE);
 
-	if (config_file != NULL)
-		err = read_config(config_file, &conf); /* override kdo args */
-	if (err != 0)
+
+	if ((start_inet_server == false) &&
+	    (start_local_server == false))
 		exit(EXIT_FAILURE);
 
-	/*
-	 * we dont need root rights
-	 */
+	// TODO:
 	//err = baa_drop_capability(CAP_SYS_NICE);
 	//if (err == -1)
 	//	exit(EXIT_FAILURE);
 
-	show_some_infos();
-
-	/*
-	 * daemon handling
-	 */
 	if (run_as_daemon)
 		daemon_handling();
 
-	/*
-	 * signal handling -> a thread for signal handling
-	 */
 	sigfillset(&mask);
 	err = pthread_sigmask(SIG_BLOCK, &mask, NULL);
 	if (err != 0)
@@ -227,43 +169,13 @@ main(int argc, char *argv[])
 	if (err != 0)
 		baa_th_error_exit(err, "could not create pthread");
 
-	/*
-	 * setup inet udp server device managment thread
-	 */
-	if (conf.start_inet_server)
+	if (start_inet_server)
 		setup_inet_server();
 
-        /*
-	 * setup unix domain server gateway to baalue-nodes
-	 */
-	if (conf.start_local_server)
+	if (start_local_server)
 		setup_local_server();
 
-        /*
-	 * setup can daemon
-	 */
-	if (conf.start_can_server)
-		setup_can_server();
-
-	/*
-	 * setup control daemon for time-triggert infrastructure
-	 */
-	if (conf.start_ttenv_server)
-		setup_ttenv_server();
-
-	/*
-	 * the other threads/tasks:
-	 *
-	 * - time-triggert stuff (tid_udp_server)
-	 * - can stuff
-	 * - a20_sdk stuff (clone/pull /opt/a20_sdk/external/...)
-	 * - hypervisor control stuff
-	 * - libxbps stuff (update void-linux)
-	 */
-
-	// (void) pthread_join(tid_udp_server, NULL);
-	// (void) pthread_join(tid_can_server, NULL);
-	// (void) pthread_join(tid_time_triggert_server, NULL);
+	(void) pthread_join(tid_local_server, NULL);
 	(void) pthread_join(tid_inet_server, NULL);
 	(void) pthread_join(tid_signal_handler, NULL);
 

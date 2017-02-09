@@ -1,4 +1,4 @@
 # Makefile.am
 
 docdir = $(datadir)/doc/@PACKAGE@
-doc_DATA = howto_baalued.txt baalued_overview.pdf
+doc_DATA = howto_baalued.txt

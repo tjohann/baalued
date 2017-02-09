@@ -5,8 +5,6 @@ noinst_LIBRARIES = libservice.a
 libservice_a_SOURCES =  \
 	libservice.h	\
 	helper.c 	\
-	server.c 	\
-	config.c 	\
 	gettext.h
 
 libservice_a_CFLAGS = -DLOCALDIR=\"$(localedir)\"

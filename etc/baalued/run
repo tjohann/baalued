@@ -1,2 +1,2 @@
 #!/bin/sh
-exec baalued -f /etc/baalued/baalued.conf 2>&1
+exec /usr/bin/baalued -i -l 2>&1
