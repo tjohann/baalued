@@ -146,7 +146,6 @@ main(int argc, char *argv[])
 	if (err != 0)
 		exit(EXIT_FAILURE);
 
-
 	if ((start_inet_server == false) &&
 	    (start_local_server == false))
 		exit(EXIT_FAILURE);
@@ -175,8 +174,12 @@ main(int argc, char *argv[])
 	if (start_local_server)
 		setup_local_server();
 
-	(void) pthread_join(tid_local_server, NULL);
-	(void) pthread_join(tid_inet_server, NULL);
+	if (start_inet_server)
+		(void) pthread_join(tid_inet_server, NULL);
+
+	if (start_local_server)
+		(void) pthread_join(tid_local_server, NULL);
+
 	(void) pthread_join(tid_signal_handler, NULL);
 
 	return EXIT_SUCCESS;
