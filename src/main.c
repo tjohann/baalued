@@ -155,8 +155,10 @@ main(int argc, char *argv[])
 	//if (err == -1)
 	//	exit(EXIT_FAILURE);
 
-	if (run_as_daemon)
+	if (run_as_daemon) {
+		baa_info_msg("will run as a daemon");
 		daemon_handling();
+	}
 
 	sigfillset(&mask);
 	err = pthread_sigmask(SIG_BLOCK, &mask, NULL);
@@ -168,11 +170,16 @@ main(int argc, char *argv[])
 	if (err != 0)
 		baa_th_error_exit(err, "could not create pthread");
 
-	if (start_inet_server)
+	if (start_inet_server) {
+		baa_info_msg("start inet server and listen at port %s",
+			     baalued_port);
 		setup_inet_server();
+	}
 
-	if (start_local_server)
+	if (start_local_server) {
+		baa_info_msg("start local server and listen at %s", "t.b.d.");
 		setup_local_server();
+	}
 
 	if (start_inet_server)
 		(void) pthread_join(tid_inet_server, NULL);

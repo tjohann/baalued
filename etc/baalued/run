@@ -1,2 +1,2 @@
 #!/bin/sh
-exec /usr/bin/baalued -f -i 2>&1
+exec /usr/bin/baalued -i 2>&1
