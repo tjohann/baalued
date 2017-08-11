@@ -2,6 +2,8 @@
 # some news ... see also TODO for hints
 #
 
+2017-08-09 -> some smaller gettext changes/adds
+
 2017-01-XX -> add server handling via kdo arguments
 	      add first skeleton for server handling via configuration file
 	      add runit service file

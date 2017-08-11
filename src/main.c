@@ -80,13 +80,13 @@ daemon_handling(void)
 {
 	int err = baa_become_daemon();
 	if (err != 0)
-		baa_error_exit("become_daemon() != 0");
+		baa_error_exit(_("become_daemon() != 0"));
 
 	baa_enable_syslog(true, program_name);
 
 	pid_file = baa_create_file_with_pid(program_name, BAA_VAR_RUN_DIR);
 	if (pid_file == NULL)
-		baa_error_exit("could not create %s", pid_file);
+		baa_error_exit(_("could not create %s"), pid_file);
 }
 
 static void
@@ -94,12 +94,12 @@ setup_inet_server(void)
 {
 	kdo_socket_inet = baa_inet_dgram_server(baalued_port);
 	if (kdo_socket_inet == -1)
-		baa_error_exit("could not create inet kdo socket");
+		baa_error_exit(_("could not create inet kdo socket"));
 
 	int err = pthread_create(&tid_inet_server, NULL,
 				 baa_device_mgmt_th, (void *) &kdo_socket_inet);
 	if (err != 0)
-		baa_th_error_exit(err, "could not create pthread");
+		baa_th_error_exit(err, _("could not create pthread"));
 }
 
 static void
@@ -150,10 +150,11 @@ main(int argc, char *argv[])
 	    (start_local_server == false))
 		exit(EXIT_FAILURE);
 
-	// TODO:
-	//err = baa_drop_capability(CAP_SYS_NICE);
-	//if (err == -1)
-	//	exit(EXIT_FAILURE);
+	/* TODO:
+	err = baa_drop_capability(CAP_SYS_NICE);
+	if (err == -1)
+	      exit(EXIT_FAILURE);
+	*/
 
 	if (run_as_daemon) {
 		baa_info_msg("will run as a daemon");
@@ -163,21 +164,21 @@ main(int argc, char *argv[])
 	sigfillset(&mask);
 	err = pthread_sigmask(SIG_BLOCK, &mask, NULL);
 	if (err != 0)
-		baa_th_error_exit(err, "could not set sigmask");
+		baa_th_error_exit(err, _("could not set sigmask"));
 
 	err = pthread_create(&tid_signal_handler, NULL,
 			     signal_handler, (void *) run_as_daemon);
 	if (err != 0)
-		baa_th_error_exit(err, "could not create pthread");
+		baa_th_error_exit(err, _("could not create pthread"));
 
 	if (start_inet_server) {
-		baa_info_msg("start inet server and listen at port %s",
+		baa_info_msg(_("start inet server and listen at port %s"),
 			     baalued_port);
 		setup_inet_server();
 	}
 
 	if (start_local_server) {
-		baa_info_msg("start local server and listen at %s", "t.b.d.");
+		baa_info_msg(_("start local server and listen at %s"), "t.b.d.");
 		setup_local_server();
 	}
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: baalued trunk\n"
 "Report-Msgid-Bugs-To: thorsten.johannvorderbrueggen@t-online.de\n"
-"POT-Creation-Date: 2017-02-25 12:45+0100\n"
+"POT-Creation-Date: 2017-08-11 21:44+0200\n"
 "PO-Revision-Date: 2016-07-18 21:47+0200\n"
 "Last-Translator: tjohann <thorsten.johannvorderbrueggen@t-online.de>\n"
 "Language-Team: German\n"
@@ -56,6 +56,37 @@ msgstr ""
 msgid "        -h   show help                          "
 msgstr ""
 
+#: src/main.c:83
+msgid "become_daemon() != 0"
+msgstr ""
+
+#: src/main.c:89
+#, c-format
+msgid "could not create %s"
+msgstr ""
+
+#: src/main.c:97
+msgid "could not create inet kdo socket"
+msgstr ""
+
+#: src/main.c:102 src/main.c:172
+msgid "could not create pthread"
+msgstr ""
+
 #: src/main.c:140
 msgid "ERROR: no valid argument\n"
+msgstr ""
+
+#: src/main.c:167
+msgid "could not set sigmask"
+msgstr ""
+
+#: src/main.c:175
+#, c-format
+msgid "start inet server and listen at port %s"
+msgstr ""
+
+#: src/main.c:181
+#, c-format
+msgid "start local server and listen at %s"
 msgstr ""
