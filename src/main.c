@@ -50,11 +50,13 @@ cleanup(void)
 	if (kdo_socket_local != -1)
 		baa_wrap_close(kdo_socket_local);
 
-	if (unlink(kdo_local_file) != 0)
-		baa_errno_msg(_("could not remove %s"), kdo_local_file);
+	if (kdo_local_file != NULL)
+		if (unlink(kdo_local_file) != 0)
+			baa_errno_msg(_("could not remove %s"), kdo_local_file);
 
-	if (unlink(pid_file) != 0)
-		baa_errno_msg(_("could not remove %s"), pid_file);
+	if (pid_file != NULL)
+		if (unlink(pid_file) != 0)
+			baa_errno_msg(_("could not remove %s"), pid_file);
 
 	baa_info_msg(_("cheers %s"), getenv("USER"));
 }
